@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <title>Merhaba Hoşgeldiniz</title>
+  <style>
+    * { margin:0; padding:0; box-sizing:border-box }
+    body { font-family:sans-serif; background:#f1f5f9; color:#333 }
+    header {
+      background: linear-gradient(135deg,#4f46e5,#6366f1);
+      color:#fff; padding:40px 20px; text-align:center;
+    }
+    header h1 { font-size:2.5rem; margin-bottom:10px }
+    .content { padding:40px 20px; text-align:center }
+    .btn { 
+      display:inline-block; margin-top:20px; padding:12px 24px;
+      background:#4f46e5; color:#fff; text-decoration:none;
+      border-radius:6px; cursor:pointer; transition:.3s;
+    }
+    .btn:hover { background:#3730a3 }
+    #loginBox {
+      display:none; margin-top:30px; background:#fff;
+      padding:20px; border:1px solid #ccc; border-radius:6px;
+    }
+    #loginBox input {
+      margin:8px 0; padding:6px; width:100%;
+      box-sizing:border-box;
+    }
+    #loginBox button {
+      margin-top:10px; padding:8px 16px;
+    }
+    #userList {
+      margin-top:40px; text-align:left; max-width:400px; margin-left:auto; margin-right:auto;
+    }
+    #userList h3 {
+      margin-bottom:10px;
+    }
+    #userList ul {
+      list-style: disc; padding-left:20px;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>Merhaba, Hoşgeldiniz!</h1>
+    <p>Web sitemize hoş geldiniz.</p>
+  </header>
+
+  <div class="content">
+    <!-- Devam butonu -->
+    <button class="btn" onclick="showLogin()">Devam</button>
+
+    <!-- Şifre & İsim girişi -->
+    <div id="loginBox">
+      <p><label>Şifre: <input type="password" id="pwd"></label></p>
+      <p><label>Adınız: <input type="text" id="username"></label></p>
+      <button onclick="doLogin()">Giriş Yap</button>
+    </div>
+
+    <!-- Giriş yapan kullanıcı listesini göster -->
+    <div id="userList">
+      <h3>Giriş Yapan Kişiler:</h3>
+      <ul id="list"></ul>
+    </div>
+  </div>
+
+  <!-- Gizli audio, aynı klasöre koyduğunuz mp3 dosyası -->
+  <audio id="muzik" src="yok_sanayim.mp3"></audio>
+
+  <script>
+    const users = [];  // Giriş yapan kullanıcı isimleri
+
+    function showLogin() {
+      document.getElementById('loginBox').style.display = 'block';
+    }
+
+    function doLogin() {
+      const pwd = document.getElementById('pwd').value;
+      const name = document.getElementById('username').value.trim();
+      const doğruŞifre = 'elif';  // Şifremiz: "elif"
+
+      if (pwd === doğruŞifre && name) {
+        alert('Hoşgeldiniz, ' + name + '!');
+        document.getElementById('muzik').play();
+        addUser(name);
+        // Alanları temizle ve kutuyu gizle
+        document.getElementById('pwd').value = '';
+        document.getElementById('username').value = '';
+        document.getElementById('loginBox').style.display = 'none';
+      } else if (pwd !== doğruŞifre) {
+        alert('Şifre yanlış!');
+      } else {
+        alert('Lütfen adınızı girin.');
+      }
+    }
+
+    function addUser(name) {
+      users.push(name);
+      const listEl = document.getElementById('list');
+      // Listeyi temizleyip yeniden oluştur
+      listEl.innerHTML = '';
+      users.forEach(user => {
+        const li = document.createElement('li');
+        li.textContent = user;
+        listEl.appendChild(li);
+      });
+    }
+  </script>
+
+</body>
+</html>
